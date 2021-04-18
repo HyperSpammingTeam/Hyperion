@@ -36,7 +36,7 @@ How to use the git tools!
 
 #11. chmod +x *
 
-#12. python2 Hyperion
+#12. python2 Hyperion.py
 
 ok you are success
 
